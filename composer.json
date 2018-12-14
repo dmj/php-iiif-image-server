@@ -1,0 +1,12 @@
+{
+    "name": "hab/php-image-server",
+    "license": "AGPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "HAB\\Diglib\\API\\IIIF\\ImageServer\\": "src/"
+        }
+    },
+    "require": {
+        "ext-gd": "*"
+    }
+}
