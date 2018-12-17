@@ -32,5 +32,18 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  */
 abstract class Feature
 {
+    protected $features;
+
     abstract public function createTransform ($spec);
+
+    public function getSupportedFeatures ()
+    {
+        $features = array();
+        foreach ($bitmask => $name) {
+            if ($this->features & $bitmask) {
+                $features []= $name;
+            }
+        }
+        return $features;
+    }
 }

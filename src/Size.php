@@ -38,7 +38,13 @@ class Size extends Feature
     const sizeByConfinedWh  = 0b00001000;
     const sizeByDistortedWh = 0b00010000;
 
-    private $features;
+    const featureNames = array(
+        Size::sizeByW           => 'sizeByW',
+        Size::sizeByH           => 'sizeByH',
+        Size::sizeByPct         => 'sizeByPct',
+        Size::sizeByConfinedWh  => 'sizeByConfinedWh',
+        Size::sizeByDistortedWh => 'sizeByDistortedWh'
+    );
 
     public function __construct ($features = 0)
     {

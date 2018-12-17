@@ -36,7 +36,11 @@ class Quality extends Feature
     const gray    = 0b00000010;
     const bitonal = 0b00000100;
 
-    private $features;
+    const featureNames = array(
+        Quality::color   => 'color',
+        Quality::gray    => 'gray',
+        Quality::bitonal => 'bitonal'
+    );
 
     public function __construct ($features = 0)
     {

@@ -36,7 +36,11 @@ class Rotation extends Feature
     const rotationArbitrary = 0b00000010;
     const mirroring         = 0b00000100;
 
-    private $features;
+    const featureNames = array(
+        Rotation::rotationBy90s     => 'rotationBy90s',
+        Rotation::rotationArbitrary => 'rotationArbitrary',
+        Rotation::mirroring         => 'mirroring'
+    );
 
     public function __construct ($features = 0)
     {

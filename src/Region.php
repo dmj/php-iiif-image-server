@@ -35,7 +35,10 @@ class Region extends Feature
     const regionByPx  = 0b0001;
     const regionByPct = 0b0010;
 
-    private $features;
+    const featureNames = array(
+        Region::regionByPx  => 'regionByPx',
+        Region::regionByPct => 'regionByPct'
+    );
 
     public function __construct ($features = 0)
     {
