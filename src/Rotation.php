@@ -30,7 +30,7 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Rotation implements Feature
+class Rotation extends Feature
 {
     const rotationBy90s     = 0b00000001;
     const rotationArbitrary = 0b00000010;

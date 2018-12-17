@@ -30,7 +30,7 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Region implements Feature
+class Region extends Feature
 {
     const regionByPx  = 0b0001;
     const regionByPct = 0b0010;

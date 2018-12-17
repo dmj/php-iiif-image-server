@@ -30,7 +30,7 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Quality implements Feature
+class Quality extends Feature
 {
     const color   = 0b00000001;
     const gray    = 0b00000010;
