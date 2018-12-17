@@ -32,11 +32,11 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  */
 class Size extends Feature
 {
-    const sizeByW          = 0b00000001;
-    const sizeByH          = 0b00000010;
-    const sizeByPct        = 0b00000100;
-    const sizeByConfinedWh = 0b00001000;
-    const sizeByDistoredWh = 0b00010000;
+    const sizeByW           = 0b00000001;
+    const sizeByH           = 0b00000010;
+    const sizeByPct         = 0b00000100;
+    const sizeByConfinedWh  = 0b00001000;
+    const sizeByDistortedWh = 0b00010000;
 
     private $features;
 

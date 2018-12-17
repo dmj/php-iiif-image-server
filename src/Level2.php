@@ -35,7 +35,7 @@ class Level2 extends FeatureSet
     protected static $complianceLevelUri = 'http://iiif.io/api/image/2/level2.json';
 
     protected static $region = Region::regionByPx | Region::regionByPct;
-    protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct | Size::sizeByConfinedWh | Size::sizeByDistoredWh;
+    protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct | Size::sizeByConfinedWh | Size::sizeByDistortedWh;
     protected static $rotation = Rotation::rotationBy90s;
     protected static $quality = Quality::color | Quality::gray | Quality::bitonal;
     protected static $format = Format::png;
