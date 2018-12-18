@@ -38,5 +38,5 @@ class Level2 extends FeatureSet
     protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct | Size::sizeByConfinedWh | Size::sizeByDistortedWh;
     protected static $rotation = Rotation::rotationBy90s;
     protected static $quality = Quality::color | Quality::gray | Quality::bitonal;
-    protected static $format = Format::png;
+    protected static $format = Format::jpg | Format::png;
 }

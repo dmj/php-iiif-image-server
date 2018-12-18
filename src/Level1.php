@@ -38,5 +38,5 @@ class Level1 extends FeatureSet
     protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct;
     protected static $rotation = 0;
     protected static $quality = 0;
-    protected static $format = 0;
+    protected static $format = Format::jpg;
 }
