@@ -42,10 +42,10 @@ abstract class FeatureSet
     public function apply ($image, $region, $size, $rotation, $quality)
     {
         $chain = new ArrayObject();
-        $this->push($chain, (new Region(static::$region))->createTransform($region));
-        $this->push($chain, (new Size(static::$size))->createTransform($size));
-        $this->push($chain, (new Rotation(static::$rotation))->createTransform($rotation));
-        $this->push($chain, (new Quality(static::$quality))->createTransform($quality));
+        $this->push($chain, $this->getRegion()->createTransform($region));
+        $this->push($chain, $this->getSize()->createTransform($size));
+        $this->push($chain, $this->getRotation()->createTransform($rotation));
+        $this->push($chain, $this->getQuality()->createTransform($quality));
 
         foreach ($chain as $function) {
             $image = call_user_func($function, $image);
@@ -61,6 +61,26 @@ abstract class FeatureSet
         $serializer = (new Format(static::$format))->createTransform($format);
         call_user_func($serializer, $image, $buffer);
         return $buffer;
+    }
+
+    public function getRegion ()
+    {
+        return new Region(static::$region);
+    }
+
+    public function getSize ()
+    {
+        return new Size(static::$size);
+    }
+
+    public function getRotation ()
+    {
+        return new Rotation(static::$rotation);
+    }
+
+    public function getQuality ()
+    {
+        return new Quality(static::$quality);
     }
 
     private function push (ArrayObject $chain, $function)
