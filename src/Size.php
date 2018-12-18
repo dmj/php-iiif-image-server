@@ -37,13 +37,15 @@ class Size extends Feature
     const sizeByPct         = 0b00000100;
     const sizeByConfinedWh  = 0b00001000;
     const sizeByDistortedWh = 0b00010000;
+    const sizeAboveFull     = 0b00100000;
 
     const featureNames = array(
         Size::sizeByW           => 'sizeByW',
         Size::sizeByH           => 'sizeByH',
         Size::sizeByPct         => 'sizeByPct',
         Size::sizeByConfinedWh  => 'sizeByConfinedWh',
-        Size::sizeByDistortedWh => 'sizeByDistortedWh'
+        Size::sizeByDistortedWh => 'sizeByDistortedWh',
+        Size::sizeAboveFull     => 'sizeAboveFull'
     );
 
     public function __construct ($features = 0)
@@ -56,31 +58,33 @@ class Size extends Feature
         if ($spec == 'full') {
             return null;
         }
+
+        $that = $this;
         if ($this->features & Size::sizeByW) {
             if (preg_match('@^(?<w>[0-9]+),$@u', $spec, $match)) {
                 $width = $match['w'];
-                return function ($image) use ($width) {
+                return function ($image) use ($that, $width) {
                     $height = round(imagesy($image) * ($width / imagesx($image)));
-                    return imagescale($image, $width, $height);
+                    return $that->scale($image, $width, $height);
                 };
             }
         }
         if ($this->features & Size::sizeByH) {
             if (preg_match('@^,(?<h>[0-9]+)$@u', $spec, $match)) {
                 $height = $match['h'];
-                return function ($image) use ($height) {
+                return function ($image) use ($that, $height) {
                     $width = round(imagesx($image) * ($height / imagesy($image)));
-                    return imagescale($image, $width, $height);
+                    return $that->scale($image, $width, $height);
                 };
             }
         }
         if ($this->features & Size::sizeByPct) {
             if (preg_match('@^pct:(?<pct>[0-9]+(\.[0-9]+)?)$@u', $spec, $match)) {
                 $pct = floatval($match['pct']);
-                return function ($image) use ($pct) {
+                return function ($image) use ($that, $pct) {
                     $width = round(imagesx($image) * $pct / 100);
                     $height = round(imagesy($image) * $pct / 100);
-                    return imagescale($image, $width, $height);
+                    return $that->scale($image, $width, $height);
                 };
             }
         }
@@ -88,11 +92,13 @@ class Size extends Feature
             if (preg_match('@^!(?<w>[0-9]+),(?<h>[0-9]+)$@u', $spec, $match)) {
                 $width = $match['w'];
                 $height = $match['h'];
-                return function ($image) use ($width, $height) {
+                return function ($image) use ($that, $width, $height) {
                     $wScale = $width / imagesx($image);
                     $hScale = $height / imagesy($image);
                     $scale = min($wScale, $hScale);
-                    return imagescale($image, imagesx($image) * $scale, imagesy($image) * $scale);
+                    $width = imagesx($image) * $scale;
+                    $height = imagesy($image) * $scale;
+                    return $that->scale($image, $width, $height);
                 };
             }
         }
@@ -100,11 +106,21 @@ class Size extends Feature
             if (preg_match('@^(?<w>[0-9]+),(?<h>[0-9]+)$@u', $spec, $match)) {
                 $width = $match['w'];
                 $height = $match['h'];
-                return function ($image) use ($width, $height) {
-                    return imagescale($image, $width, $height);
+                return function ($image) use ($that, $width, $height) {
+                    return $that->scale($image, $width, $height);
                 };
             }
         }
         throw new UnsupportedFeature(sprintf('Unsupported image size feature request: %s', $spec));
+    }
+
+    public function scale ($image, $width, $height)
+    {
+        if (!($this->features & Size::sizeAboveFull)) {
+            if ($width > imagesx($image) || $height > imagesy($image)) {
+                throw new UnsupportedFeature('Cannot scale image above full');
+            }
+        }
+        return imagescale($image, $width, $height);
     }
 }
