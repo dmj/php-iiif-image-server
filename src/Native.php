@@ -84,13 +84,14 @@ class Native
             throw new RuntimeException();
         }
 
-        $image = $this->features->apply($image, $region, $size, $rotation, $quality);
+        $transformation = new Transformation($this->features);
+        $image = $transformation->apply($image, $region, $size, $rotation, $quality);
         if (!is_resource($image)) {
             throw new RuntimeException();
         }
 
         $buffer = fopen('php://temp', 'rw');
-        $this->features->serialize($image, $buffer, $format);
+        $transformation->serialize($image, $buffer, $format);
         return $buffer;
     }
 }

@@ -41,30 +41,6 @@ abstract class FeatureSet
     abstract public function getQualityFeatures ();
     abstract public function getFormatFeatures ();
 
-    public function apply ($image, $region, $size, $rotation, $quality)
-    {
-        $chain = new ArrayObject();
-        $this->push($chain, $this->getRegion()->createTransform($region));
-        $this->push($chain, $this->getSize()->createTransform($size));
-        $this->push($chain, $this->getRotation()->createTransform($rotation));
-        $this->push($chain, $this->getQuality()->createTransform($quality));
-
-        foreach ($chain as $function) {
-            $image = call_user_func($function, $image);
-            if (!is_resource($image)) {
-                throw new RuntimeException("Error in image transformation");
-            }
-        }
-        return $image;
-    }
-
-    public function serialize ($image, $buffer, $format)
-    {
-        $serializer = $this->getFormat()->createTransform($format);
-        call_user_func($serializer, $image, $buffer);
-        return $buffer;
-    }
-
     public function getProfile ()
     {
         $profile = array(
@@ -102,12 +78,5 @@ abstract class FeatureSet
     public function getFormat ()
     {
         return new Format($this->getFormatFeatures());
-    }
-
-    private function push (ArrayObject $chain, $function)
-    {
-        if ($function) {
-            $chain->append($function);
-        }
     }
 }
