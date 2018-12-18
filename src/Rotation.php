@@ -49,15 +49,36 @@ class Rotation extends Feature
 
     public function createTransform ($spec)
     {
-        if ($spec == '0') {
-            return null;
-        }
-        if ($this->features & Rotation::rotationBy90s) {
-            if ($spec == '90' || $spec == '180' || $spec == '270') {
-                $angle = (360 - floatval($spec)) % 360;
-                return function ($image) use ($angle) {
-                    return imagerotate($image, $angle, 0);
-                };
+        if (preg_match('@(?<mirror>!)?(?<angle>[0-9]+(\.[0-9]+)?)@u', $spec, $match)) {
+            $mirror = null;
+            if ($match['mirror']) {
+                if ($this->features & Rotation::mirroring) {
+                    $mirror = function ($image) {
+                        if (imageflip($image, IMG_FLIP_HORIZONTAL)) {
+                            return $image;
+                        }
+                    };
+                } else {
+                    throw new UnsupportedFeature('Mirroring feature not supported');
+                }
+            }
+
+            $angle = $match['angle'];
+            if ($angle == '0') {
+                return $mirror;
+            }
+            if ($this->features & Rotation::rotationBy90s) {
+                if ($angle == '90' || $angle == '180' || $angle == '270') {
+                    $angle = (360 - floatval($angle)) % 360;
+                    return function ($image) use ($angle, $mirror) {
+                        if ($mirror) {
+                            call_user_func($mirror, $image);
+                        }
+                        if (is_resource($image)) {
+                            return imagerotate($image, $angle, 0);
+                        }
+                    };
+                }
             }
         }
         throw new UnsupportedFeature(sprintf('Unsupported image rotation request: %s', $spec));
