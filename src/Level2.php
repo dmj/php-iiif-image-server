@@ -32,11 +32,33 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  */
 class Level2 extends FeatureSet
 {
-    protected static $complianceLevelUri = 'http://iiif.io/api/image/2/level2.json';
+    public function getComplianceLevelUri ()
+    {
+        return 'http://iiif.io/api/image/2/level2.json';
+    }
 
-    protected static $region = Region::regionByPx | Region::regionByPct;
-    protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct | Size::sizeByConfinedWh | Size::sizeByDistortedWh;
-    protected static $rotation = Rotation::rotationBy90s;
-    protected static $quality = Quality::default | Quality::color | Quality::gray | Quality::bitonal;
-    protected static $format = Format::jpg | Format::png;
+    public function getRegionFeatures ()
+    {
+        return Region::regionByPx | Region::regionByPct;
+    }
+
+    public function getSizeFeatures ()
+    {
+        return Size::sizeByW | Size::sizeByH | Size::sizeByPct | Size::sizeByConfinedWh | Size::sizeByDistortedWh;
+    }
+
+    public function getRotationFeatures ()
+    {
+        return Rotation::mirroring | Rotation::rotationBy90s;
+    }
+
+    public function getQualityFeatures ()
+    {
+        return Quality::default | Quality::gray | Quality::bitonal;
+    }
+
+    public function getFormatFeatures ()
+    {
+        return Format::jpg | Format::png;
+    }
 }

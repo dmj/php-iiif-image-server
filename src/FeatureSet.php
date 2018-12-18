@@ -34,10 +34,12 @@ use ArrayObject;
  */
 abstract class FeatureSet
 {
-    public function getComplianceLevelUri ()
-    {
-        return static::$complianceLevelUri;
-    }
+    abstract public function getComplianceLevelUri ();
+    abstract public function getRegionFeatures ();
+    abstract public function getSizeFeatures ();
+    abstract public function getRotationFeatures ();
+    abstract public function getQualityFeatures ();
+    abstract public function getFormatFeatures ();
 
     public function apply ($image, $region, $size, $rotation, $quality)
     {
@@ -79,27 +81,27 @@ abstract class FeatureSet
 
     public function getRegion ()
     {
-        return new Region(static::$region);
+        return new Region($this->getRegionFeatures());
     }
 
     public function getSize ()
     {
-        return new Size(static::$size);
+        return new Size($this->getSizeFeatures());
     }
 
     public function getRotation ()
     {
-        return new Rotation(static::$rotation);
+        return new Rotation($this->getRotationFeatures());
     }
 
     public function getQuality ()
     {
-        return new Quality(static::$quality);
+        return new Quality($this->getQualityFeatures());
     }
 
     public function getFormat ()
     {
-        return new Format(static::$format);
+        return new Format($this->getFormatFeatures());
     }
 
     private function push (ArrayObject $chain, $function)
