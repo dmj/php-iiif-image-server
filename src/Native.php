@@ -58,9 +58,6 @@ class Native
             'protocol' => 'http://iiif.io/api/image',
             'width' => $info[0],
             'height' => $info[1],
-            'profile' => array(
-                $this->features->getComplianceLevelUri()
-            ),
             'sizes' => array(
                 array(
                     'width' => $info[0],
@@ -69,6 +66,11 @@ class Native
             )
         );
         return $info;
+    }
+
+    public function getProfile ()
+    {
+        return $this->features->getProfile();
     }
 
     public function getImageStream ($imageUri, $imageParameters)
