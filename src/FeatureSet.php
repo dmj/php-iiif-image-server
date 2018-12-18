@@ -58,7 +58,7 @@ abstract class FeatureSet
 
     public function serialize ($image, $buffer, $format)
     {
-        $serializer = (new Format(static::$format))->createTransform($format);
+        $serializer = $this->getFormat()->createTransform($format);
         call_user_func($serializer, $image, $buffer);
         return $buffer;
     }
@@ -81,6 +81,11 @@ abstract class FeatureSet
     public function getQuality ()
     {
         return new Quality(static::$quality);
+    }
+
+    public function getFormat ()
+    {
+        return new Format(static::$format);
     }
 
     private function push (ArrayObject $chain, $function)
