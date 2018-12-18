@@ -35,8 +35,10 @@ class Quality extends Feature
     const color   = 0b00000001;
     const gray    = 0b00000010;
     const bitonal = 0b00000100;
+    const default = 0b00001000;
 
     const featureNames = array(
+        Quality::default => 'default',
         Quality::color   => 'color',
         Quality::gray    => 'gray',
         Quality::bitonal => 'bitonal'

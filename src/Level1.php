@@ -37,6 +37,6 @@ class Level1 extends FeatureSet
     protected static $region = Region::regionByPx;
     protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct;
     protected static $rotation = 0;
-    protected static $quality = 0;
+    protected static $quality = Quality::default;
     protected static $format = Format::jpg;
 }

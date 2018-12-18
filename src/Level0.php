@@ -37,6 +37,6 @@ class Level0 extends FeatureSet
     protected static $region = 0;
     protected static $size = 0;
     protected static $rotation = 0;
-    protected static $quality = 0;
-    protected static $format = 0;
+    protected static $quality = Quality::default;
+    protected static $format = Format::jpg;
 }
