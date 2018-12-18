@@ -41,20 +41,6 @@ abstract class FeatureSet
     abstract public function getQualityFeatures ();
     abstract public function getFormatFeatures ();
 
-    public function getProfile ()
-    {
-        $profile = array(
-            'formats' => $this->getFormat()->getSupportedFeatures(),
-            'qualities' => $this->getQuality()->getSupportedFeatures(),
-            'supports' => array_merge(
-                $this->getRegion()->getSupportedFeatures(),
-                $this->getSize()->getSupportedFeatures(),
-                $this->getRotation()->getSupportedFeatures()
-            ),
-        );
-        return $profile;
-    }
-
     public function getRegion ()
     {
         return new Region($this->getRegionFeatures());

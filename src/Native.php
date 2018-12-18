@@ -70,7 +70,16 @@ class Native
 
     public function getProfile ()
     {
-        return $this->features->getProfile();
+        $profile = array(
+            'formats' => $this->features->getFormat()->getSupportedFeatures(),
+            'qualities' => $this->features->getQuality()->getSupportedFeatures(),
+            'supports' => array_merge(
+                $this->features->getRegion()->getSupportedFeatures(),
+                $this->features->getSize()->getSupportedFeatures(),
+                $this->features->getRotation()->getSupportedFeatures()
+            ),
+        );
+        return $profile;
     }
 
     public function getImageStream ($imageUri, $imageParameters)
