@@ -30,13 +30,13 @@ namespace HAB\Diglib\API\IIIF\ImageServer;
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Format
+class Format extends Feature
 {
 
     const jpg = 0b0000001;
     const png = 0b0000010;
 
-    private $features;
+    protected $features;
 
     public function __construct ($features = 0)
     {
