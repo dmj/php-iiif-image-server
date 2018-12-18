@@ -36,6 +36,11 @@ class Format extends Feature
     const jpg = 0b0000001;
     const png = 0b0000010;
 
+    const featureNames = array(
+        Format::jpg => 'jpg',
+        Format::png => 'png',
+    );
+
     protected $features;
 
     public function __construct ($features = 0)
