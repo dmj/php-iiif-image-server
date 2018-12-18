@@ -80,6 +80,17 @@ class Rotation extends Feature
                     };
                 }
             }
+            if ($this->features & Rotation::rotationArbitrary) {
+                $angle = (360 - floatval($angle)) % 360;
+                return function ($image) use ($angle, $mirror) {
+                    if ($mirror) {
+                        call_user_func($mirror, $image);
+                    }
+                    if (is_resource($image)) {
+                        return imagerotate($image, $angle, 0);
+                    }
+                };
+            }
         }
         throw new UnsupportedFeature(sprintf('Unsupported image rotation request: %s', $spec));
     }
