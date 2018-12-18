@@ -53,7 +53,7 @@ class Rotation extends Feature
             return null;
         }
         if ($this->features & Rotation::rotationBy90s) {
-            if ($spec == '90' || $spec == '180' || $spec = '270') {
+            if ($spec == '90' || $spec == '180' || $spec == '270') {
                 $angle = (360 - floatval($spec)) % 360;
                 return function ($image) use ($angle) {
                     return imagerotate($image, $angle, 0);
