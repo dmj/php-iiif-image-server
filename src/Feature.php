@@ -39,11 +39,11 @@ abstract class Feature
     public function getSupportedFeatures ()
     {
         $features = array();
-        foreach ($bitmask => $name) {
+        foreach (static::featureNames as $bitmask => $name) {
             if ($this->features & $bitmask) {
                 $features []= $name;
             }
         }
-        return $features;
+        return $features;        
     }
 }
