@@ -49,7 +49,7 @@ class Level2 extends FeatureSet
 
     public function getRotationFeatures ()
     {
-        return Rotation::mirroring | Rotation::rotationBy90s;
+        return Rotation::rotationBy90s;
     }
 
     public function getQualityFeatures ()
