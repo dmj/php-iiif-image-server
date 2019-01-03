@@ -102,7 +102,7 @@ class Size extends Feature
                 };
             }
         }
-        if ($this->features & Size::sizeByDistoredWh) {
+        if ($this->features & Size::sizeByDistortedWh) {
             if (preg_match('@^(?<w>[0-9]+),(?<h>[0-9]+)$@u', $spec, $match)) {
                 $width = $match['w'];
                 $height = $match['h'];
