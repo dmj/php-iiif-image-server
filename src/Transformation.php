@@ -62,8 +62,7 @@ class Transformation
     public function serialize ($image, $buffer, $format)
     {
         $serializer = $this->features->getFormat()->createTransform($format);
-        call_user_func($serializer, $image, $buffer);
-        return $buffer;
+        return call_user_func($serializer, $image, $buffer);
     }
 
     private function push (ArrayObject $chain, $function)

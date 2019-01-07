@@ -23,47 +23,36 @@
 
 namespace HAB\Diglib\API\IIIF\ImageServer;
 
+use RuntimeException;
+
 /**
- * Serializer.
+ * Image bitstream data.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Format extends Feature
+class ImageStream
 {
+    private $stream;
+    private $mediatype;
 
-    const jpg = 0b0000001;
-    const png = 0b0000010;
-
-    const featureNames = array(
-        Format::jpg => 'jpg',
-        Format::png => 'png',
-    );
-
-    protected $features;
-
-    public function __construct ($features = 0)
+    public function __construct ($stream, $mediatype)
     {
-        $this->features = $features;
+        if (!is_resource($stream)) {
+            throw new RuntimeException();
+        }
+        $this->stream = $stream;
+        $this->mediatype = $mediatype;
     }
 
-    public function createTransform ($spec)
+    public function getStream ()
     {
-        if ($spec == 'jpg') {
-            return function ($image, $buffer) {
-                imagejpeg($image, $buffer);
-                return new ImageStream($buffer, 'image/jpeg');
-            };
-        }
-        if ($this->features & Format::png) {
-            if ($spec == 'png') {
-                return function ($image, $buffer) {
-                    imagepng($image, $buffer);
-                    return new ImageStream($buffer, 'image/png');
-                };
-            }
-        }
-        throw new UnsupportedFeature(sprintf('Unsupported image format: %s', $spec));
+        return $this->stream;
+    }
+
+    public function getMediatype ()
+    {
+        return $this->mediatype;
     }
 }

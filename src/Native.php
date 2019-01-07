@@ -100,7 +100,6 @@ class Native
         }
 
         $buffer = fopen('php://temp', 'rw');
-        $transformation->serialize($image, $buffer, $format);
-        return $buffer;
+        return $transformation->serialize($image, $buffer, $format);
     }
 }
