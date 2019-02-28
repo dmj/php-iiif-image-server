@@ -5,8 +5,5 @@
         "psr-4": {
             "HAB\\Diglib\\API\\IIIF\\ImageServer\\": "src/"
         }
-    },
-    "require-dev": {
-        "ext-gd": "*"
     }
 }
