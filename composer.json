@@ -6,7 +6,7 @@
             "HAB\\Diglib\\API\\IIIF\\ImageServer\\": "src/"
         }
     },
-    "require": {
+    "require-dev": {
         "ext-gd": "*"
     }
 }
