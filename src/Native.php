@@ -32,20 +32,8 @@ use RuntimeException;
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Native
+class Native extends Server
 {
-    private $features;
-
-    public function __construct (FeatureSet $features)
-    {
-        $this->features = $features;
-    }
-
-    public function getComplianceLevel ()
-    {
-        return $this->features->getComplianceLevelUri();
-    }
-
     public function getImageInfo ($imageUri)
     {
         $info = getimagesize($imageUri);
@@ -66,20 +54,6 @@ class Native
             )
         );
         return $info;
-    }
-
-    public function getProfile ()
-    {
-        $profile = array(
-            'formats' => $this->features->getFormat()->getSupportedFeatures(),
-            'qualities' => $this->features->getQuality()->getSupportedFeatures(),
-            'supports' => array_merge(
-                $this->features->getRegion()->getSupportedFeatures(),
-                $this->features->getSize()->getSupportedFeatures(),
-                $this->features->getRotation()->getSupportedFeatures()
-            ),
-        );
-        return $profile;
     }
 
     public function getImageStream ($imageUri, $imageParameters)
